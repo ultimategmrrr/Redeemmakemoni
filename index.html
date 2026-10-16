@@ -48,7 +48,8 @@ header { border-bottom:1px solid var(--line); padding:0 16px; height:50px; displ
 .block-title { font-family:var(--display); font-size:12px; letter-spacing:4px; color:var(--grey); text-transform:uppercase; }
 
 .video-frame { position:relative; background:#000; border-top:3px solid var(--red); border:1px solid var(--line); overflow:hidden; border-radius:12px; max-width:100%; }
-.video-frame video { width:100%; height:auto; max-height:70vh; object-fit:contain; background:#000; display:block; }
+.video-frame video { width:100%; height:auto; max-height:70vh; object-fit:contain; background:#000; display:block; 
+  display:block; background:#000; max-width:100%; -webkit-transform:translateZ(0); transform:translateZ(0);}
 video::-webkit-media-controls-panel { background:linear-gradient(transparent,rgba(0,0,0,0.85)); }
 video::-internal-media-controls-download-button { display:none !important; }
 
@@ -270,36 +271,78 @@ if (vid) {
   vid.muted = false;
   vid.defaultMuted = false;
   vid.volume = 1;
-  const attemptVideoPlay = () => vid.play().catch(() => {
-    // Mobile browsers may block autoplay with sound; native Play control remains available.
-  });
-  attemptVideoPlay();
-  vid.addEventListener('canplay', attemptVideoPlay, { once: true });
+  vid.preload = 'auto';
+
+  const attemptVideoPlayWithSound = () => {
+    vid.muted = false;
+    vid.volume = 1;
+    const playPromise = vid.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(() => {
+        // Some browsers block autoplay with sound until the viewer interacts.
+      });
+    }
+  };
+
+  if (vid.readyState >= 2) attemptVideoPlayWithSound();
+  else vid.addEventListener('canplay', attemptVideoPlayWithSound, { once: true });
+
+  // If autoplay with sound is blocked, the first tap on the video starts sound playback.
+  const enableSoundOnInteraction = () => {
+    vid.muted = false;
+    vid.volume = 1;
+    const p = vid.play();
+    if (p && typeof p.catch === 'function') p.catch(() => {});
+  };
+  vid.addEventListener('click', enableSoundOnInteraction);
   vid.addEventListener('contextmenu', e => e.preventDefault());
+  vid.addEventListener('waiting', () => vid.classList.add('is-buffering'));
+  vid.addEventListener('playing', () => vid.classList.remove('is-buffering'));
+  vid.addEventListener('canplay', () => vid.classList.remove('is-buffering'));
 }
+
 document.getElementById('shareBtn').onclick = async () => {
   const url = location.href;
-  const text = 'Free Fire Redeem Code - Claim Now!';
-  const waUrl = 'https://wa.me/?text=' + encodeURIComponent(text + ' ' + url);
-  
-  if (navigator.share) {
-    try {
-      await navigator.share({ title: text, text: text, url: url });
-      return;
-    } catch (e) {}
-  }
-  
-  if (confirm('Share on WhatsApp?\n\nOK = WhatsApp\nCancel = Copy Link')) {
-    window.open(waUrl, '_blank');
-  } else {
-    try {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
       await navigator.clipboard.writeText(url);
-      alert('Link copied!');
-    } catch (e) {
-      prompt('Copy this link:', url);
+    } else {
+      const field = document.createElement('textarea');
+      field.value = url;
+      field.setAttribute('readonly', '');
+      field.style.position = 'fixed';
+      field.style.opacity = '0';
+      document.body.appendChild(field);
+      field.select();
+      const copied = document.execCommand('copy');
+      field.remove();
+      if (!copied) throw new Error('Copy failed');
     }
+    const btn = document.getElementById('shareBtn');
+    const oldLabel = btn.getAttribute('aria-label') || 'Share website';
+    btn.setAttribute('aria-label', 'Website link copied');
+    btn.classList.add('link-copied');
+    window.setTimeout(() => {
+      btn.setAttribute('aria-label', oldLabel);
+      btn.classList.remove('link-copied');
+    }, 1800);
+  } catch (e) {
+    // No WhatsApp popup or native share sheet; copy manually only if browser blocks clipboard.
+    const field = document.createElement('textarea');
+    field.value = url;
+    field.setAttribute('readonly', '');
+    field.style.position = 'fixed';
+    field.style.opacity = '1';
+    field.style.zIndex = '99999';
+    field.style.left = '10px';
+    field.style.bottom = '10px';
+    field.style.width = '90%';
+    document.body.appendChild(field);
+    field.focus();
+    field.select();
   }
 };
 </script>
+
 </body>
 </html>
