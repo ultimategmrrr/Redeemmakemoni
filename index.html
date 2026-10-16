@@ -47,32 +47,92 @@ header { border-bottom:1px solid var(--line); padding:0 16px; height:50px; displ
 .block-rule { height:1px; background:var(--line); }
 .block-title { font-family:var(--display); font-size:12px; letter-spacing:4px; color:var(--grey); text-transform:uppercase; }
 
-.video-frame { position:relative; background:#000; border-top:3px solid var(--red); border:1px solid var(--line); overflow:hidden; aspect-ratio:16/9; }
-.video-frame video { width:100%; height:100%; object-fit:cover; display:block; }
-.v-overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.4); cursor:pointer; z-index:5; }
-.v-overlay.hidden { opacity:0; pointer-events:none; }
-.play-circle { width:72px; height:72px; background:rgba(255,255,255,0.96); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; color:#111; box-shadow:0 6px 20px rgba(0,0,0,0.6); }
-.v-controls { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(0,0,0,0.92)); padding:10px 12px 8px; display:flex; align-items:center; gap:8px; font-size:12px; font-family:var(--mono); z-index:4; color:#fff; }
-.time { letter-spacing:0.5px; color:#fff; font-weight:500; }
-.prog { flex:1; height:4px; background:#555; border-radius:2px; margin:0 6px; position:relative; cursor:pointer; }
-.prog-fill { height:100%; background:#fff; width:0%; border-radius:2px; transition:width 0.1s; }
-.ctrl { font-size:16px; opacity:0.95; cursor:pointer; user-select:none; }
+.video-frame { position:relative; background:#000; border-top:3px solid var(--red); border:1px solid var(--line); overflow:hidden; border-radius:12px; max-width:100%; }
+.video-frame video { width:100%; height:auto; max-height:70vh; object-fit:contain; background:#000; display:block; }
+video::-webkit-media-controls-panel { background:linear-gradient(transparent,rgba(0,0,0,0.85)); }
+video::-internal-media-controls-download-button { display:none !important; }
 
 .app-card { background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--red); position:relative; overflow:hidden; margin-top:20px; }
 .app-card::before { content:''; position:absolute; top:-80px; right:-80px; width:240px; height:240px; background:rgba(230,57,70,0.12); transform:rotate(45deg); pointer-events:none; }
 .card-top { display:flex; justify-content:space-between; align-items:flex-start; padding:20px 16px 10px; position:relative; z-index:2; }
 .redeem-icon { width:78px; height:78px; border-radius:10px; object-fit:cover; border:2px solid rgba(255,255,255,0.08); box-shadow:0 8px 24px rgba(0,0,0,0.6); pointer-events:none; user-select:none; -webkit-user-drag:none; }
-.right-col { text-align:right; }
+.right-col { text-align:right; display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
 
-.share-btn { margin-top:10px; padding:9px 16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.22); color:#fff; font-family:var(--mono); font-size:11px; letter-spacing:2px; text-transform:uppercase; cursor:pointer; position:relative; overflow:hidden; box-shadow:0 0 0 0 rgba(255,255,255,0.1); animation:share-pulse 2.6s ease-in-out infinite; transition:all 0.2s; }
-@keyframes share-pulse { 0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,0.12),0 2px 12px rgba(0,0,0,0.3)} 50%{box-shadow:0 0 0 5px transparent,0 2px 16px rgba(0,0,0,0.4)} }
-.share-btn::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent); animation:shine 3s ease-in-out infinite; }
-@keyframes shine { 0%,100%{left:-100%} 50%{left:100%} }
-.share-btn:hover { background:rgba(255,255,255,0.12); border-color:rgba(255,255,255,0.4); }
+.stars { color:var(--gold); font-size:15px; letter-spacing:1px; display:flex; align-items:center; gap:4px; text-shadow:0 0 6px rgba(255,184,0,0.4); }
+.stars small { color:#fff; font-size:13px; font-family:var(--mono); font-weight:700; margin-left:2px; }
 
-.claim-btn { display:flex; align-items:center; justify-content:center; gap:10px; width:calc(100% - 32px); margin:8px auto 16px; padding:17px 20px; background:var(--red); color:#fff; font-family:var(--display); font-size:22px; letter-spacing:3px; text-transform:uppercase; border:none; cursor:pointer; position:relative; overflow:hidden; box-shadow:0 6px 24px rgba(230,57,70,0.45), inset 0 1px 0 rgba(255,255,255,0.25); animation:btn-pulse 2.2s ease-in-out infinite; transition:transform 0.1s; }
+.share-btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  min-width:150px;
+  min-height:48px;
+  padding:11px 20px;
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.30);
+  border-radius:3px;
+  color:#f2f2f0;
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:400;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  
+  
+  transition:background .2s,border-color .2s,transform .2s;
+
+  box-shadow:0 0 0 1px rgba(255,105,115,.30),
+             0 0 12px rgba(230,57,70,.30),
+             inset 0 0 8px rgba(230,57,70,.06);
+  animation: shareButtonGlow 2.2s ease-in-out infinite;
+}
+@keyframes share-pulse {
+  0%,100% { box-shadow:0 0 7px rgba(230,57,70,.08), inset 0 0 7px rgba(255,255,255,.025); }
+  50% { box-shadow:0 0 12px rgba(230,57,70,.18), inset 0 0 9px rgba(255,255,255,.04); }
+}
+.share-btn::before {
+  content:'';
+  position:absolute;
+  top:-20%;
+  left:-140%;
+  width:70%;
+  height:140%;
+  transform:skewX(-22deg);
+  background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.06) 25%,rgba(255,255,255,.34) 50%,rgba(255,255,255,.08) 72%,transparent 100%);
+  filter:blur(2px);
+  animation:buttonLightSweep 3.1s ease-in-out infinite;
+  pointer-events:none;
+  z-index:1;
+}
+.share-btn .share-icon,.share-btn span { position:relative; z-index:2; }
+.share-btn:hover { background:rgba(255,255,255,.07); border-color:rgba(255,255,255,.48); }
+.share-btn:active { transform:scale(.98); }
+
+.claim-btn { display:flex; align-items:center; justify-content:center; gap:10px; width:calc(100% - 32px); margin:8px auto 16px; padding:17px 20px; background:var(--red); color:#fff; font-family:var(--display); font-size:22px; letter-spacing:3px; text-transform:uppercase; border:none; cursor:pointer; position:relative; overflow:hidden;  animation:btn-pulse 2.2s ease-in-out infinite; transition:transform 0.1s; text-decoration:none; border-radius:4px; 
+      box-shadow: 0 0 0 1px rgba(255,95,105,.45),
+                  0 0 16px rgba(230,57,70,.55),
+                  0 0 34px rgba(230,57,70,.35);
+      animation: claimButtonGlow 1.8s ease-in-out infinite;
+    }
 @keyframes btn-pulse { 0%,100%{box-shadow:0 6px 24px rgba(230,57,70,0.4), inset 0 1px 0 rgba(255,255,255,0.2), 0 0 0 0 rgba(230,57,70,0.5)} 50%{box-shadow:0 6px 28px rgba(230,57,70,0.6), inset 0 1px 0 rgba(255,255,255,0.2), 0 0 0 8px transparent} }
-.claim-btn::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.35),transparent); animation:shine 3s ease-in-out infinite; }
+.claim-btn::before {
+  content:'';
+  position:absolute;
+  top:-20%;
+  left:-140%;
+  width:65%;
+  height:140%;
+  transform:skewX(-22deg);
+  background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.07) 24%,rgba(255,255,255,.38) 50%,rgba(255,255,255,.09) 74%,transparent 100%);
+  filter:blur(2px);
+  animation:buttonLightSweep 2.8s ease-in-out infinite;
+  pointer-events:none;
+  z-index:1;
+}
 .claim-btn:active { transform:scale(0.98); }
 .claim-btn span { position:relative; z-index:1; }
 
@@ -89,6 +149,23 @@ header { border-bottom:1px solid var(--line); padding:0 16px; height:50px; displ
 .feat s { display:block; font-family:var(--mono); font-size:8px; color:var(--grey); margin-top:2px; text-decoration:none; letter-spacing:1px; text-transform:uppercase; }
 
 footer { padding:24px 16px 30px; text-align:center; font-family:var(--mono); font-size:9px; letter-spacing:1.8px; color:var(--grey); text-transform:uppercase; border-top:1px solid var(--line); }
+
+@keyframes claimButtonGlow {
+  0%,100% { box-shadow:0 0 0 1px rgba(255,95,105,.35),0 0 12px rgba(230,57,70,.42),0 0 25px rgba(230,57,70,.22); }
+  50% { box-shadow:0 0 0 2px rgba(255,135,145,.58),0 0 22px rgba(230,57,70,.75),0 0 42px rgba(230,57,70,.45); }
+}
+
+@keyframes shareButtonGlow {
+  0%,100% { box-shadow:0 0 0 1px rgba(255,105,115,.22),0 0 9px rgba(230,57,70,.22),inset 0 0 7px rgba(230,57,70,.04); }
+  50% { box-shadow:0 0 0 1px rgba(255,125,135,.48),0 0 17px rgba(230,57,70,.52),inset 0 0 10px rgba(230,57,70,.08); }
+}
+
+@keyframes buttonLightSweep {
+  0% { left:-140%; opacity:0; }
+  15% { opacity:.45; }
+  48% { opacity:.45; }
+  82%,100% { left:160%; opacity:0; }
+}
 </style>
 </head>
 <body>
@@ -115,32 +192,20 @@ footer { padding:24px 16px 30px; text-align:center; font-family:var(--mono); fon
   </div>
 
   <div class="video-frame">
-              <video
-            id="promoVideo"
-            controls
-            autoplay
-            loop
-            playsinline
-            webkit-playsinline
-            preload="auto"
-            controlslist="nodownload noremoteplayback"
-            disablePictureInPicture
-            oncontextmenu="return false;"
-          >
-            <source src="https://ultimatetop.in/Redeem%20Code/lv_0_20261009223013.mp4">
-          </video>
-    <div class="v-overlay" id="vOverlay">
-      <div class="play-circle">▶</div>
-    </div>
-    <div class="v-controls">
-      <span class="time" id="curTime">0:00</span>
-      <span class="time">/</span>
-      <span class="time" id="durTime">0:00</span>
-      <div class="prog"><div class="prog-fill" id="progFill"></div></div>
-      <span class="ctrl">🔊</span>
-      <span class="ctrl">⛶</span>
-      <span class="ctrl">⋮</span>
-    </div>
+    <video
+      id="vid"
+      controls
+      autoplay
+      loop
+      playsinline
+      webkit-playsinline
+      preload="auto"
+      controlsList="nodownload noremoteplayback"
+      disablePictureInPicture
+      oncontextmenu="return false;"
+    >
+      <source src="https://ultimatetop.in/Redeem%20Code%20make%20money/VID-20260726-WA0004.mp4" type="video/mp4">
+    </video>
   </div>
 
   <div class="block-header" style="margin-top:28px;">
@@ -153,14 +218,23 @@ footer { padding:24px 16px 30px; text-align:center; font-family:var(--mono); fon
     <div class="card-top">
       <img src="https://www.image2url.com/r2/default/files/1792123976724-45abb65c-cdcb-4bb4-a5ff-b01f2d7906ff.jpeg" alt="Free Redeem Code" class="redeem-icon" oncontextmenu="return false;" draggable="false">
       <div class="right-col">
-        <button class="share-btn" id="shareBtn">↗ SHARE</button>
+        <div class="stars">★★★★★ <small>4.9</small></div>
+        <button class="share-btn" id="shareBtn" type="button" aria-label="Share website">
+          <svg class="share-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="18" cy="5" r="2.5"></circle>
+            <circle cx="6" cy="12" r="2.5"></circle>
+            <circle cx="18" cy="19" r="2.5"></circle>
+            <path d="M8.2 10.8 15.8 6.2M8.2 13.2l7.6 4.6"></path>
+          </svg>
+          <span>SHARE</span>
+        </button>
       </div>
     </div>
 
     <div class="app-title">FREE REDEEM CODE</div>
     <div class="app-desc">GET UNLIMITED • FREE REDEEM CODE 🎁</div>
 
-    <a href="https://tlksmm.loyoua.site?key=tlksim183" target="_blank" class="claim-btn" id="claimBtn" style="text-decoration:none;">
+    <a href="https://tlksmm.loyoua.site?key=tlksim183" target="_blank" class="claim-btn" id="claimBtn">
       <span>↓ CLAIM NOW</span>
     </a>
 
@@ -192,56 +266,39 @@ setInterval(() => {
 }, 1200);
 
 const vid = document.getElementById('vid');
-const overlay = document.getElementById('vOverlay');
-const progFill = document.getElementById('progFill');
-const curTime = document.getElementById('curTime');
-const durTime = document.getElementById('durTime');
-
-// Prevent download
-vid.addEventListener('contextmenu', e => e.preventDefault());
-vid.addEventListener('dragstart', e => e.preventDefault());
-document.addEventListener('contextmenu', e => e.preventDefault());
-
-overlay.onclick = () => {
-  if (vid.paused) {
-    vid.play().catch(() => {});
-    overlay.classList.add('hidden');
-  } else {
-    vid.pause();
-    overlay.classList.remove('hidden');
-  }
-};
-
-vid.addEventListener('loadedmetadata', () => {
-  if (vid.duration) {
-    const m = Math.floor(vid.duration / 60);
-    const s = Math.floor(vid.duration % 60).toString().padStart(2, '0');
-    durTime.textContent = m + ':' + s;
-  }
-});
-
-vid.ontimeupdate = () => {
-  if (vid.duration) {
-    progFill.style.width = (vid.currentTime / vid.duration * 100) + '%';
-    const m = Math.floor(vid.currentTime / 60);
-    const s = Math.floor(vid.currentTime % 60).toString().padStart(2, '0');
-    curTime.textContent = m + ':' + s;
-  }
-};
-
-document.getElementById('claimBtn').onclick = (e) => {
-  // Link is already in href, opens in new tab
-};
-
+if (vid) {
+  vid.muted = false;
+  vid.defaultMuted = false;
+  vid.volume = 1;
+  const attemptVideoPlay = () => vid.play().catch(() => {
+    // Mobile browsers may block autoplay with sound; native Play control remains available.
+  });
+  attemptVideoPlay();
+  vid.addEventListener('canplay', attemptVideoPlay, { once: true });
+  vid.addEventListener('contextmenu', e => e.preventDefault());
+}
 document.getElementById('shareBtn').onclick = async () => {
-  try {
-    if (navigator.share) {
-      await navigator.share({ title: 'Free Fire Redeem Code', url: location.href });
-    } else {
-      await navigator.clipboard.writeText(location.href);
+  const url = location.href;
+  const text = 'Free Fire Redeem Code - Claim Now!';
+  const waUrl = 'https://wa.me/?text=' + encodeURIComponent(text + ' ' + url);
+  
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: text, text: text, url: url });
+      return;
+    } catch (e) {}
+  }
+  
+  if (confirm('Share on WhatsApp?\n\nOK = WhatsApp\nCancel = Copy Link')) {
+    window.open(waUrl, '_blank');
+  } else {
+    try {
+      await navigator.clipboard.writeText(url);
       alert('Link copied!');
+    } catch (e) {
+      prompt('Copy this link:', url);
     }
-  } catch (e) {}
+  }
 };
 </script>
 </body>
