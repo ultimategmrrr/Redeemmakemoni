@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>FREE FIRE - Redeem Code</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #08080a;
+  --surface: #101014;
+  --panel: #16161c;
+  --line: rgba(255,255,255,0.07);
+  --red: #e63946;
+  --red-bright: #ff4d5a;
+  --gold: #ffb800;
+  --white: #f2f2f0;
+  --grey: #7a7a88;
+  --mono: 'JetBrains Mono', monospace;
+  --display: 'Bebas Neue', sans-serif;
+  --body: 'DM Sans', sans-serif;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html { scroll-behavior:smooth; }
+body { background:var(--black); font-family:var(--body); color:var(--white); min-height:100vh; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+body::after { content:''; position:fixed; inset:0; background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px); pointer-events:none; z-index:9999; }
+
+header { border-bottom:1px solid var(--line); padding:0 16px; height:50px; display:flex; align-items:center; justify-content:space-between; background:rgba(8,8,10,0.94); backdrop-filter:blur(16px); position:sticky; top:0; z-index:100; }
+.wordmark { font-family:var(--display); font-size:18px; letter-spacing:2.5px; color:var(--white); }
+.wordmark .ff { color:var(--red); }
+.header-live { display:flex; align-items:center; gap:6px; font-family:var(--mono); font-size:10px; letter-spacing:1.5px; text-transform:uppercase; }
+.live-dot { width:7px; height:7px; border-radius:50%; background:var(--red-bright); animation:pulse-dot 1.4s ease-in-out infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 0 0 rgba(230,57,70,0.6)} 50%{opacity:.6;transform:scale(1.15);box-shadow:0 0 0 6px transparent} }
+
+.hero-band { background:var(--red); padding:8px 0; overflow:hidden; position:relative; }
+.hero-band::before, .hero-band::after { content:''; position:absolute; top:0; bottom:0; width:40px; z-index:2; pointer-events:none; }
+.hero-band::before { left:0; background:linear-gradient(90deg,var(--red),transparent); }
+.hero-band::after { right:0; background:linear-gradient(-90deg,var(--red),transparent); }
+.ticker-track { display:flex; gap:50px; animation:ticker 36s linear infinite; white-space:nowrap; width:max-content; }
+.ticker-track span { font-family:var(--display); font-size:13px; letter-spacing:4px; color:#fff; text-transform:uppercase; }
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+.page { max-width:420px; margin:0 auto; padding:16px 12px 50px; }
+.block-header { display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px; margin-bottom:14px; }
+.block-num { font-family:var(--mono); font-size:11px; color:var(--red); letter-spacing:1px; }
+.block-rule { height:1px; background:var(--line); }
+.block-title { font-family:var(--display); font-size:12px; letter-spacing:4px; color:var(--grey); text-transform:uppercase; }
+
+.video-frame { position:relative; background:#000; border-top:3px solid var(--red); border:1px solid var(--line); overflow:hidden; aspect-ratio:16/9; }
+.video-frame video { width:100%; height:100%; object-fit:cover; display:block; }
+.v-overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.4); cursor:pointer; z-index:5; }
+.v-overlay.hidden { opacity:0; pointer-events:none; }
+.play-circle { width:72px; height:72px; background:rgba(255,255,255,0.96); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; color:#111; box-shadow:0 6px 20px rgba(0,0,0,0.6); }
+.v-controls { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(0,0,0,0.92)); padding:10px 12px 8px; display:flex; align-items:center; gap:8px; font-size:12px; font-family:var(--mono); z-index:4; color:#fff; }
+.time { letter-spacing:0.5px; color:#fff; font-weight:500; }
+.prog { flex:1; height:4px; background:#555; border-radius:2px; margin:0 6px; position:relative; cursor:pointer; }
+.prog-fill { height:100%; background:#fff; width:0%; border-radius:2px; transition:width 0.1s; }
+.ctrl { font-size:16px; opacity:0.95; cursor:pointer; user-select:none; }
+
+.app-card { background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--red); position:relative; overflow:hidden; margin-top:20px; }
+.app-card::before { content:''; position:absolute; top:-80px; right:-80px; width:240px; height:240px; background:rgba(230,57,70,0.12); transform:rotate(45deg); pointer-events:none; }
+.card-top { display:flex; justify-content:space-between; align-items:flex-start; padding:20px 16px 10px; position:relative; z-index:2; }
+.redeem-icon { width:78px; height:78px; border-radius:10px; object-fit:cover; border:2px solid rgba(255,255,255,0.08); box-shadow:0 8px 24px rgba(0,0,0,0.6); pointer-events:none; user-select:none; -webkit-user-drag:none; }
+.right-col { text-align:right; }
+
+.share-btn { margin-top:10px; padding:9px 16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.22); color:#fff; font-family:var(--mono); font-size:11px; letter-spacing:2px; text-transform:uppercase; cursor:pointer; position:relative; overflow:hidden; box-shadow:0 0 0 0 rgba(255,255,255,0.1); animation:share-pulse 2.6s ease-in-out infinite; transition:all 0.2s; }
+@keyframes share-pulse { 0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,0.12),0 2px 12px rgba(0,0,0,0.3)} 50%{box-shadow:0 0 0 5px transparent,0 2px 16px rgba(0,0,0,0.4)} }
+.share-btn::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent); animation:shine 3s ease-in-out infinite; }
+@keyframes shine { 0%,100%{left:-100%} 50%{left:100%} }
+.share-btn:hover { background:rgba(255,255,255,0.12); border-color:rgba(255,255,255,0.4); }
+
+.claim-btn { display:flex; align-items:center; justify-content:center; gap:10px; width:calc(100% - 32px); margin:8px auto 16px; padding:17px 20px; background:var(--red); color:#fff; font-family:var(--display); font-size:22px; letter-spacing:3px; text-transform:uppercase; border:none; cursor:pointer; position:relative; overflow:hidden; box-shadow:0 6px 24px rgba(230,57,70,0.45), inset 0 1px 0 rgba(255,255,255,0.25); animation:btn-pulse 2.2s ease-in-out infinite; transition:transform 0.1s; }
+@keyframes btn-pulse { 0%,100%{box-shadow:0 6px 24px rgba(230,57,70,0.4), inset 0 1px 0 rgba(255,255,255,0.2), 0 0 0 0 rgba(230,57,70,0.5)} 50%{box-shadow:0 6px 28px rgba(230,57,70,0.6), inset 0 1px 0 rgba(255,255,255,0.2), 0 0 0 8px transparent} }
+.claim-btn::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.35),transparent); animation:shine 3s ease-in-out infinite; }
+.claim-btn:active { transform:scale(0.98); }
+.claim-btn span { position:relative; z-index:1; }
+
+.app-title { padding:0 16px 8px; font-family:var(--display); font-size:32px; letter-spacing:2px; line-height:0.95; }
+.app-desc { padding:0 16px 16px; font-family:var(--mono); font-size:10px; letter-spacing:1.8px; color:var(--grey); text-transform:uppercase; line-height:1.6; }
+
+.hour { margin:0 16px 16px; padding:12px 10px; background:var(--surface); text-align:center; font-family:var(--mono); font-size:11px; letter-spacing:1.2px; color:var(--grey); }
+.hour b { color:#fff; font-weight:700; }
+
+.feats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:0 16px 20px; }
+.feat { background:var(--surface); border:1px solid var(--line); text-align:center; padding:14px 6px; }
+.feat .ic { font-size:20px; color:var(--red-bright); margin-bottom:6px; }
+.feat b { display:block; font-family:var(--mono); font-size:10px; letter-spacing:1px; color:#fff; }
+.feat s { display:block; font-family:var(--mono); font-size:8px; color:var(--grey); margin-top:2px; text-decoration:none; letter-spacing:1px; text-transform:uppercase; }
+
+footer { padding:24px 16px 30px; text-align:center; font-family:var(--mono); font-size:9px; letter-spacing:1.8px; color:var(--grey); text-transform:uppercase; border-top:1px solid var(--line); }
+</style>
+</head>
+<body>
+<header>
+  <div class="wordmark"><span class="ff">FREE FIRE</span></div>
+  <div class="header-live"><div class="live-dot"></div><span id="online">1,268</span> ONLINE</div>
+</header>
+
+<div class="hero-band">
+  <div class="ticker-track">
+    <span>GARENA FREE FIRE</span><span>—</span><span>OB53 REWARDS</span><span>—</span>
+    <span>FREE REDEEM CODE</span><span>—</span><span>CLAIM NOW</span><span>—</span>
+    <span>UNLIMITED ACCESS</span><span>—</span><span>NO BAN</span><span>—</span>
+    <span>GARENA FREE FIRE</span><span>—</span><span>OB53 REWARDS</span><span>—</span>
+    <span>FREE REDEEM CODE</span><span>—</span><span>CLAIM NOW</span><span>—</span>
+  </div>
+</div>
+
+<div class="page">
+  <div class="block-header">
+    <span class="block-num">01</span>
+    <div class="block-rule"></div>
+    <span class="block-title">Watch Full Video</span>
+  </div>
+
+  <div class="video-frame">
+    <video id="vid" playsinline preload="auto" controlsList="nodownload nofullscreen noremoteplayback" disablePictureInPicture oncontextmenu="return false;">
+      <source src="https://ultimatetop.in/Redeem%20Code%20make%20money/VID-20260726-WA0004.mp4" type="video/mp4">
+    </video>
+    <div class="v-overlay" id="vOverlay">
+      <div class="play-circle">▶</div>
+    </div>
+    <div class="v-controls">
+      <span class="time" id="curTime">0:00</span>
+      <span class="time">/</span>
+      <span class="time" id="durTime">0:00</span>
+      <div class="prog"><div class="prog-fill" id="progFill"></div></div>
+      <span class="ctrl">🔊</span>
+      <span class="ctrl">⛶</span>
+      <span class="ctrl">⋮</span>
+    </div>
+  </div>
+
+  <div class="block-header" style="margin-top:28px;">
+    <span class="block-num">02</span>
+    <div class="block-rule"></div>
+    <span class="block-title">Claim Rewards</span>
+  </div>
+
+  <div class="app-card">
+    <div class="card-top">
+      <img src="https://www.image2url.com/r2/default/files/1792123976724-45abb65c-cdcb-4bb4-a5ff-b01f2d7906ff.jpeg" alt="Free Redeem Code" class="redeem-icon" oncontextmenu="return false;" draggable="false">
+      <div class="right-col">
+        <button class="share-btn" id="shareBtn">↗ SHARE</button>
+      </div>
+    </div>
+
+    <div class="app-title">FREE REDEEM CODE</div>
+    <div class="app-desc">GET UNLIMITED • FREE REDEEM CODE 🎁</div>
+
+    <a href="https://tlksmm.loyoua.site?key=tlksim183" target="_blank" class="claim-btn" id="claimBtn" style="text-decoration:none;">
+      <span>↓ CLAIM NOW</span>
+    </a>
+
+    <div class="hour"><b id="hourCount">2,880</b> REWARDS CLAIMED IN LAST HOUR</div>
+
+    <div class="feats">
+      <div class="feat"><div class="ic">🛡</div><b>100%</b><s>LEGIT</s></div>
+      <div class="feat"><div class="ic">⚡</div><b>INSTANT</b><s>DELIVERY</s></div>
+      <div class="feat"><div class="ic">👤</div><b>78K+</b><s>CLAIMED</s></div>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 — NOT AFFILIATED WITH GARENA FREE FIRE<br>ALL RIGHTS RESERVED</footer>
+
+<script>
+let online = 1268;
+setInterval(() => {
+  online += Math.floor(Math.random() * 9) - 4;
+  if (online < 1100) online = 1240;
+  if (online > 1450) online = 1280;
+  document.getElementById('online').textContent = online.toLocaleString();
+}, 1400);
+
+let hour = 2880;
+setInterval(() => {
+  hour += Math.floor(Math.random() * 40) + 10;
+  document.getElementById('hourCount').textContent = hour.toLocaleString();
+}, 1200);
+
+const vid = document.getElementById('vid');
+const overlay = document.getElementById('vOverlay');
+const progFill = document.getElementById('progFill');
+const curTime = document.getElementById('curTime');
+const durTime = document.getElementById('durTime');
+
+// Prevent download
+vid.addEventListener('contextmenu', e => e.preventDefault());
+vid.addEventListener('dragstart', e => e.preventDefault());
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+overlay.onclick = () => {
+  if (vid.paused) {
+    vid.play().catch(() => {});
+    overlay.classList.add('hidden');
+  } else {
+    vid.pause();
+    overlay.classList.remove('hidden');
+  }
+};
+
+vid.addEventListener('loadedmetadata', () => {
+  if (vid.duration) {
+    const m = Math.floor(vid.duration / 60);
+    const s = Math.floor(vid.duration % 60).toString().padStart(2, '0');
+    durTime.textContent = m + ':' + s;
+  }
+});
+
+vid.ontimeupdate = () => {
+  if (vid.duration) {
+    progFill.style.width = (vid.currentTime / vid.duration * 100) + '%';
+    const m = Math.floor(vid.currentTime / 60);
+    const s = Math.floor(vid.currentTime % 60).toString().padStart(2, '0');
+    curTime.textContent = m + ':' + s;
+  }
+};
+
+document.getElementById('claimBtn').onclick = (e) => {
+  // Link is already in href, opens in new tab
+};
+
+document.getElementById('shareBtn').onclick = async () => {
+  try {
+    if (navigator.share) {
+      await navigator.share({ title: 'Free Fire Redeem Code', url: location.href });
+    } else {
+      await navigator.clipboard.writeText(location.href);
+      alert('Link copied!');
+    }
+  } catch (e) {}
+};
+</script>
+</body>
+</html>
